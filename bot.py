@@ -39,7 +39,7 @@ from telegram.ext import (
 import cv2
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageEnhance, ImageOps
-import moviepy.editor as mp
+import moviepy as mp
 from moviepy.video.fx import resize, rotate, crop
 from moviepy.video.VideoClip import TextClip
 from moviepy.video.compositing.CompositeVideoClip import CompositeVideoClip
