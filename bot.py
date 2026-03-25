@@ -100,7 +100,7 @@ logger = logging.getLogger(__name__)
 # ==================== CONFIGURATION ====================
 class Config:
     TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN', '8776043562:AAH7x_OMPjQmOSlvmIMjWJ40-oWaJ66inBw')
-    WEBHOOK_URL = os.getenv('WEBHOOK_URL', 'https://kinva-master.onrender.com')
+    WEBHOOK_URL = os.getenv('WEBHOOK_URL', 'https://api.telegram.org/bot8776043562:AAH7x_OMPjQmOSlvmIMjWJ40-oWaJ66inBw/setWebhook?url=https://kinva-master-bote.onrender.com/webhook')
     PORT = int(os.getenv('PORT', 5000))
     DATABASE_URL = os.getenv('DATABASE_URL', 'kinva_master.db')
     PREMIUM_PRICE = float(os.getenv('PREMIUM_PRICE', 9.99))
