@@ -1417,7 +1417,7 @@ class KinvaMasterBot:
         logger.info("=" * 50)
         
         port = int(os.environ.get('PORT', Config.PORT))
-        socketio.run(flask_app, host='0.0.0.0', port=port, debug=False)
+        socketio.run(flask_app, host='0.0.0.0', port=port, debug=False, allow_unsafe_werkzeug=True)
     
     async def stop(self):
         if self.bot:
