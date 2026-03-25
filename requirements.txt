@@ -7,5 +7,4 @@ pillow==11.3.0
 numpy==2.4.3
 python-dotenv==1.2.2
 aiohttp==3.13.3
-requests==2.32.5
 aiofiles==24.1.0
