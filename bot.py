@@ -1,6 +1,7 @@
+
+
 """
-Kinva Master Bot - Complete Production Ready Version
-Telegram bot with advanced video/image editing, admin controls, broadcasting, and premium features
+Kinva Master Bot - Fixed Imports
 """
 
 import os
@@ -9,54 +10,73 @@ import sqlite3
 import asyncio
 import json
 import uuid
-import shutil
-import subprocess
-import datetime
 import random
 import string
-from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Tuple, Union
-from functools import wraps
-import threading
-import queue
 import time
 import re
+from datetime import datetime, timedelta
+from typing import Dict, List, Optional, Tuple, Union
 
 # Web framework imports
-from flask import Flask, render_template, request, jsonify, session, redirect, url_for, send_file
-from flask_socketio import SocketIO, emit
-from werkzeug.utils import secure_filename
+from flask import Flask, render_template, request, jsonify
+from flask_socketio import SocketIO
 
 # Telegram bot imports
 import telegram
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, InputFile, InputMediaPhoto, InputMediaVideo
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, InputFile
 from telegram.ext import (
     Application, CommandHandler, MessageHandler, CallbackQueryHandler,
-    ConversationHandler, ContextTypes, filters, JobQueue
+    ConversationHandler, ContextTypes, filters
 )
 
 # Media processing imports
 import cv2
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageEnhance, ImageOps
-import moviepy as mp
-from moviepy.video.fx import resize, rotate, crop
-from moviepy.video.VideoClip import TextClip
-from moviepy.video.compositing.CompositeVideoClip import CompositeVideoClip
-import imageio
 
-# Advanced editing imports
-import ffmpeg
-from rembg import remove
-import face_recognition
-from scipy.spatial import distance as scipy_distance
+# ==================== FIXED MOVIEPY IMPORTS ====================
+# For moviepy 2.2.1, the structure has changed
+try:
+    # Try the new moviepy 2.0+ structure
+    from moviepy import VideoFileClip, AudioFileClip, CompositeVideoClip
+    from moviepy.video.VideoClip import TextClip
+    from moviepy.audio.io.AudioFileClip import AudioFileClip
+    logger = logging.getLogger(__name__)
+    logger.info("Using moviepy 2.0+ imports")
+except ImportError:
+    try:
+        # Fallback to moviepy 1.x structure
+        from moviepy.editor import VideoFileClip, AudioFileClip, CompositeVideoClip, TextClip
+        logger.info("Using moviepy 1.x imports")
+    except ImportError:
+        # Last resort - use the specific paths
+        from moviepy.video.io.VideoFileClip import VideoFileClip
+        from moviepy.audio.io.AudioFileClip import AudioFileClip
+        from moviepy.video.compositing.CompositeVideoClip import CompositeVideoClip
+        from moviepy.video.VideoClip import TextClip
+        logger.info("Using moviepy direct imports")
+
+# ==================== OPTIONAL IMPORTS ====================
+# These are optional and won't crash if missing
+try:
+    from rembg import remove
+    REMBG_AVAILABLE = True
+except ImportError:
+    REMBG_AVAILABLE = False
+    remove = None
+
+try:
+    import face_recognition
+    FACE_RECOGNITION_AVAILABLE = True
+except ImportError:
+    FACE_RECOGNITION_AVAILABLE = False
+    face_recognition = None
 
 # Utilities
 import requests
 from dotenv import load_dotenv
 import aiohttp
 import aiofiles
-from apscheduler.schedulers.background import BackgroundScheduler
 
 # Load environment variables
 load_dotenv()
@@ -67,7 +87,6 @@ logging.basicConfig(
     level=logging.INFO
 )
 logger = logging.getLogger(__name__)
-
 # ==================== CONFIGURATION ====================
 class Config:
     TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN', '8776043562:AAH7x_OMPjQmOSlvmIMjWJ40-oWaJ66inBw')
