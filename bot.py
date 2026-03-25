@@ -35,7 +35,7 @@ from telegram.ext import (
 import cv2
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
-import moviepy.editor as mp
+import moviepy as mp
 from moviepy.video.fx import resize, rotate, crop
 import imageio
 
