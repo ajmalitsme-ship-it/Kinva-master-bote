@@ -1,5 +1,3 @@
-
-
 """
 Kinva Master Bot - Fixed Imports
 """
@@ -73,7 +71,11 @@ except ImportError:
     face_recognition = None
 
 # Utilities
-import requests
+# Remove this line:
+# import requests
+
+# Keep only:
+import aiohttp
 from dotenv import load_dotenv
 import aiohttp
 import aiofiles
